@@ -2,28 +2,20 @@ package com.example.security22.security22.entities;
 
 import java.util.Set;
 
-// import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "users")
-public class User {
+public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +25,6 @@ public class User {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_authorities", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "authorityId"))
-    private Set<Authority> authorities;
-
+    @ManyToMany(mappedBy = "authorities")
+    private Set<User> users;
 }
