@@ -2,6 +2,8 @@ package com.example.security22.security22.security;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +32,10 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return List.of(() -> "read");
+        return user.getAuthorities()
+                .stream()
+                .map(SecurityAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
